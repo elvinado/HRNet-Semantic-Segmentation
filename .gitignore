@@ -1,11 +1,11 @@
 .vscode
-data/
 log/
-output/
 pretrained_models
 scripts/
 detail-api/
-data/list
+ade20k/
+cityscapes/
+cocostuff/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

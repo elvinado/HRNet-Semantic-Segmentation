@@ -33,7 +33,7 @@ def main():
     test_size = (config.TEST.IMAGE_SIZE[1], config.TEST.IMAGE_SIZE[0])
     test_dataset = eval('datasets.'+config.DATASET.DATASET)(
                         root=config.DATASET.ROOT,
-                        list_path=config.DATASET.TEST_SET,
+                        list_path=config.DATASET.INFER_SET,
                         num_samples=None,
                         num_classes=config.DATASET.NUM_CLASSES,
                         multi_scale=False,
@@ -50,21 +50,20 @@ def main():
         num_workers=config.WORKERS,
         pin_memory=True)
     
-    if 'play' in config.DATASET.TEST_SET:
-        model.eval()
-        with torch.no_grad():
-            for _, batch in enumerate(tqdm(testloader)):
-                image, label, _, name, *border_padding = batch
+    model.eval()
+    with torch.no_grad():
+        for _, batch in enumerate(tqdm(testloader)):
+            image, label, _, name, *border_padding = batch
 
-                pred = test_dataset.inference(
-                    config,
-                    model,
-                    image)
+            pred = test_dataset.inference(
+                config,
+                model,
+                image)
 
-                sv_path = os.path.join(config.DATASET.ROOT,config.OUTPUT_DIR)
-                if not os.path.exists(sv_path):
-                    os.mkdir(sv_path)
-                test_dataset.save_pred(pred, sv_path, name)
+            sv_path = os.path.join(config.DATASET.ROOT,'inference',config.OUTPUT_DIR)
+            if not os.path.exists(sv_path):
+                os.mkdir(sv_path)
+            test_dataset.save_pred(pred, sv_path, name)
     
 if __name__ == '__main__':
     main()

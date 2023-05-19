@@ -107,11 +107,15 @@ class COCOStuff(BaseDataset):
             image_path,
             cv2.IMREAD_COLOR
         )
-        label = np.array(
-            Image.open(label_path).convert('P')
-        )
-        label = self.encode_label(label)
-        label = self.reduce_zero_label(label)
+        try:
+            label = np.array(
+                Image.open(label_path).convert('P')
+            )
+            label = self.encode_label(label)
+            label = self.reduce_zero_label(label)
+        except FileNotFoundError:
+            label = np.array([0])
+        
         size = label.shape
 
         if 'testval' in self.list_path:

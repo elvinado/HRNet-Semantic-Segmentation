@@ -13,6 +13,7 @@ DATASET:
   ROOT: 'data/'
   TEST_SET: 'list/cocostuff/playtest.lst'
   TRAIN_SET: 'list/cocostuff/train.lst'
+  INFER_SET: 'list/inference/infer.lst'
   NUM_CLASSES: 171
 MODEL:
   NAME: seg_hrnet_ocr
